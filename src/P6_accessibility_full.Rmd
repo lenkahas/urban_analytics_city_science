@@ -12,7 +12,7 @@ bibliography: references.bib
 
 ## Setup
 
-To run this pratical you need to have an RStudio project as discussed in the 
+To run this practical you need to have an RStudio project as discussed in the 
 [previous practical](https://etranos.info/urban_analytics_city_science/src/network_analysis.html). 
 
 ```{r setup, results='hide', message=FALSE, warning=FALSE}
@@ -35,7 +35,7 @@ The aim of this practical is to calculate different accessibility indicators.
 For a brief overview about accessibility, please have a look at [@rodrigue2020geography]
 (for example [here](https://transportgeography.org/contents/methods/transportation-accessibility/)
 ).
-For in depth reviews have a look at @HOLL2007286, @el2022making and @shi2020literature
+For in depth reviews, have a look at @HOLL2007286, @el2022making and @shi2020literature
 as well as at some older and well-cited papers such as @geurs2004accessibility and 
 @bruinsma1998accessibility. The below typology of accessibility concepts is from
 @HOLL2007286.
@@ -167,7 +167,7 @@ head(negative_exp)
 
 And now we can plot these metrics. The `grid` object is a toy spatial dataset of 
 the places we calculate the above accessibility indicators. We first load these
-spatial data, merge them with the acessibility indicator we want to plot and then
+spatial data, merge them with the accessibility indicator we want to plot and then
 we plot these data.
 
 ```{r}
@@ -189,7 +189,7 @@ ggplot() +
 ## London example
 
 All the above were based on the data that came together with the `accessibility`
-package. Let's repeat this exercise using some real world data from [data.london.gov.uk](https://data.london.gov.uk/dataset/jobs-and-job-density-borough).
+package. Let's repeat this exercise using some real-world data from [data.london.gov.uk](https://data.london.gov.uk/dataset/jobs-and-job-density-borough).
 Jobs and population per Local Authority represent the opportunities. 
 
 ```{r}
@@ -234,7 +234,7 @@ within London. Therefore we use the `filter` option to select only the Local Aut
 which are included within -- this is the `%in%` operator -- the `df$id` column. 
 Finally, we create a new object which only includes the centroids of these polygons.
 Why are we doing this? Because we need to calculate distances and accessibility
-metrics for specific points and we will use these points as representative for each
+metrics for specific points and we will use these points as representatives for each
 Local Authority. 
 
 ::: callout-tip
@@ -250,13 +250,12 @@ london <- st_read(path.shape) %>%
 london.centres <- st_centroid(london)
 ```
 
-Now we need to actually calculate the distance matrix. We are going to use a real
-world road network to perform what is known as *routing*. There is a great discussion
+Now we need to actually calculate the distance matrix. We are going to use a real-world road network to perform what is known as *routing*. There is a great discussion
 about routing and before you move forward I would encourage you to read the relevant
 section from @lovelace2019geocomputation, which can be found [here](https://geocompr.robinlovelace.net/transport.html#routes).
 
 We are using the `osmr` package which can do routing for us. The details of the `osrm`
-package can be founf [here](https://github.com/riatelab/osrm).
+package can be found [here](https://github.com/riatelab/osrm).
 
 The below code creates a distance table between all the `london.centres`. We are 
 interested in distance measured as time -- i.e. duration -- by car. The `osrm`
@@ -279,7 +278,7 @@ a $33*33$ matrix as it should have been.
 
 Then, we need to convert the $n*n$ matrix to a long format. If you remember, we used to
 call this format an [edge list](https://etranos.info/urban_analytics_city_science/src/intro_networks.html#/directed-weighted-networks-1).
-There are different way to do this.
+There are different ways to do this.
 We can use the ready-made function `odmatrix_to_od()` from the `od` package. 
 To see how it works, make sure that the `od` package is installed and then type the
 following: `od::odmatrix_to_od`. This will reveal how the `odmatrix_to_od()` function
@@ -307,7 +306,7 @@ As before, we calculate the cumulative opportunities for London's Local Authorit
 (the centroids to be more accurate) within a cut-off of 20 minutes.
 
 ```{r eval=FALSE}
-df <- data.table::as.data.table(df)
+df <- data.table::as.data.table(df) # The cumulative_cutoff function is sensitive to NAs in the data and even though you can't see them directly, S3 class of the dataframe might be hiding some in the background information about the variables. Transformation to data.table is advised.
 
 mtc <- cumulative_cutoff(
   dist.df,
@@ -344,7 +343,7 @@ Can you calculate and plot other accessibility metrics for London?
 :::
 
 ::: callout-tip
-What do we miss by focusing on London' accessibility?
+What do we miss by focusing on London's accessibility?
 :::
 
 
